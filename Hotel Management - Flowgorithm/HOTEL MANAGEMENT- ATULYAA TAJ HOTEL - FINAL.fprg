@@ -1,0 +1,640 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.11">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="shailesh"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2021-02-05 09:43:01 AM"/>
+        <attribute name="created" value="c2hhaWxlc2g7TEFQVE9QLTVONUw5MkVGOzIwMjEtMDItMDM7MDY6NDU6MjcgUE07MzE0Mg=="/>
+        <attribute name="edited" value="c2Fuaml0aCByYWdoYXYuczsgTEFQVE9QLUtMUEYyOVE2OyAyMDIxLTAyLTA0OyAwOToxNjozNSBQTTsgNDAwNg=="/>
+        <attribute name="edited" value="ZGVsbDtERVNLVE9QLUQ3MEZPVkQ7MjAyMS0wMi0wNDsxMDo0ODo0NSBQTTsxOzI4NTk="/>
+        <attribute name="edited" value="c2hhaWxlc2g7TEFQVE9QLTVONUw5MkVGOzIwMjEtMDItMDU7MDg6Mzg6MDEgQU07MjszMjM0"/>
+        <attribute name="edited" value="U0FSQVRIIENIQU5EUkE7REVTS1RPUC03VkU3MVM1OzIwMjEtMDItMDU7MDk6NDM6MDEgQU07ODszMzg2"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="DateArray" type="String" array="True" size="3"/>
+            <declare name="CheckinDate" type="String" array="False" size=""/>
+            <declare name="CheckinDateArray" type="String" array="True" size="5"/>
+            <declare name="CheckoutDate" type="String" array="False" size=""/>
+            <declare name="CheckoutDateArray" type="String" array="True" size="5"/>
+            <declare name="NoOfDays" type="Integer" array="False" size=""/>
+            <declare name="NoOfDaysArray" type="Integer" array="True" size="5"/>
+            <declare name="BookingArray" type="String" array="True" size="5"/>
+            <declare name="Name" type="String" array="False" size=""/>
+            <declare name="NameArray" type="String" array="True" size="5"/>
+            <declare name="PhoneNumber" type="String" array="False" size=""/>
+            <declare name="PhoneNumberArray" type="String" array="True" size="5"/>
+            <declare name="Address" type="String" array="False" size=""/>
+            <declare name="AddressArray" type="String" array="True" size="5"/>
+            <declare name="Email" type="String" array="False" size=""/>
+            <declare name="EmailArray" type="String" array="True" size="5"/>
+            <declare name="RoomInfoArray" type="String" array="True" size="2"/>
+            <declare name="RoomType" type="String" array="False" size=""/>
+            <declare name="RoomTypeArray" type="String" array="True" size="5"/>
+            <declare name="RoomBill" type="Integer" array="False" size=""/>
+            <declare name="RestaurantBill" type="Integer" array="False" size=""/>
+            <declare name="PaymentArray" type="String" array="True" size="3"/>
+            <declare name="TotalBillArray" type="Integer" array="True" size="5"/>
+            <declare name="TotalBill" type="Integer" array="False" size=""/>
+            <declare name="PaymentType" type="String" array="False" size=""/>
+            <declare name="PaymentTypeArray" type="String" array="True" size="5"/>
+            <declare name="Decision" type="String" array="False" size=""/>
+            <assign variable="Decision" expression="&quot;yes&quot;"/>
+            <declare name="RoomNumber" type="Integer" array="False" size=""/>
+            <assign variable="RoomNumber" expression="0"/>
+            <output expression="&quot;Welcome to Atulyaa Taj Hotel&quot;" newline="True"/>
+            <while expression="(Decision==&quot;Yes&quot;)||(Decision==&quot;YES&quot;)||(Decision==&quot;yes&quot;)">
+                <assign variable="NoOfDays" expression="DateCalculation(DateArray)"/>
+                <assign variable="CheckinDate" expression="DateArray[0]"/>
+                <assign variable="CheckoutDate" expression="DateArray[1]"/>
+                <call expression="Booking(BookingArray)"/>
+                <assign variable="Name" expression="BookingArray[0]"/>
+                <assign variable="PhoneNumber" expression="BookingArray[1]"/>
+                <assign variable="Address" expression="BookingArray[2]"/>
+                <assign variable="Email" expression="BookingArray[3]"/>
+                <assign variable="RoomBill" expression="RoomInformation(RoomInfoArray)"/>
+                <assign variable="RoomType" expression="RoomInfoArray[0]"/>
+                <assign variable="RestaurantBill" expression="Restaurant()"/>
+                <assign variable="TotalBill" expression="Payment(RoomBill,RestaurantBill,PaymentArray,NoOfDays)"/>
+                <assign variable="PaymentType" expression="PaymentArray[0]"/>
+                <call expression="DataStoring(CheckinDate,CheckinDateArray,CheckoutDate,CheckoutDateArray,Name,NameArray,PhoneNumber,PhoneNumberArray,Address,AddressArray,Email,EmailArray,RoomType,RoomTypeArray,TotalBill,TotalBillArray,PaymentType,PaymentTypeArray,RoomNumber)"/>
+                <assign variable="RoomNumber" expression="RoomNumber+1"/>
+                <output expression="&quot;Your RoomNumber Is :&quot; &amp; RoomNumber" newline="True"/>
+                <output expression="&quot;Do you Want To Book Another Room&#13;&#10;Enter Yes or No&quot;" newline="True"/>
+                <input variable="Decision"/>
+            </while>
+            <comment text="ONLY FOR MANAGEMENT "/>
+            <output expression="&quot;Do You Want To Display Customer's BookingDetails&#13;&#10;Enter Yes or No &quot;" newline="True"/>
+            <input variable="Decision"/>
+            <while expression="(Decision==&quot;Yes&quot;)||(Decision==&quot;YES&quot;)||(Decision==&quot;yes&quot;)">
+                <call expression="Display(CheckinDateArray,CheckoutDateArray,NameArray,PhoneNumberArray,AddressArray,EmailArray,RoomTypeArray,TotalBillArray,PaymentTypeArray)"/>
+                <output expression="&quot;Do You Want To Display Another Customer's BookingDetails&#13;&#10;Enter Yes or No &quot;" newline="True"/>
+                <input variable="Decision"/>
+            </while>
+            <output expression="&quot; Thank you for your visit &quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="Booking" type="None" variable="">
+        <parameters>
+            <parameter name="BookingArray" type="String" array="True"/>
+        </parameters>
+        <body>
+            <output expression="&quot;Please enter your personal details&quot;" newline="True"/>
+            <output expression="&quot;Enter your Full Name:&quot;" newline="True"/>
+            <declare name="name, address, email" type="String" array="False" size=""/>
+            <declare name="phonenumber" type="String" array="False" size=""/>
+            <input variable="name"/>
+            <output expression="&quot;Enter your phonenumber:&quot;" newline="True"/>
+            <input variable="phonenumber"/>
+            <while expression="len(phonenumber)!=10">
+                <output expression="&quot;Please enter valid phonenumber&quot;" newline="True"/>
+                <input variable="phonenumber"/>
+            </while>
+            <output expression="&quot;Please enter your address&quot;" newline="True"/>
+            <input variable="address"/>
+            <output expression="&quot;Please enter your Email_id&quot;" newline="True"/>
+            <input variable="email"/>
+            <assign variable="BookingArray[0]" expression="name"/>
+            <assign variable="BookingArray[1]" expression="phonenumber"/>
+            <assign variable="BookingArray[2]" expression="address"/>
+            <assign variable="BookingArray[3]" expression="email"/>
+        </body>
+    </function>
+    <function name="Breakfast" type="Integer" variable="bill">
+        <parameters>
+            <parameter name="a1" type="Integer" array="False"/>
+            <parameter name="a2" type="Integer" array="False"/>
+            <parameter name="a3" type="Integer" array="False"/>
+            <parameter name="a4" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="choice, quantity, bill" type="Integer" array="False" size=""/>
+            <declare name="q1, q2, q3, q4" type="Integer" array="False" size=""/>
+            <assign variable="q1" expression="0"/>
+            <assign variable="q2" expression="0"/>
+            <assign variable="q3" expression="0"/>
+            <assign variable="q4" expression="0"/>
+            <declare name="str" type="String" array="False" size=""/>
+            <do expression="str==&quot;yes&quot;">
+                <output expression="&quot;You have choosen menu for BREAKFSAT&#13;&#10;please choose your food item from the following&#13;&#10;1.IDLY price-RS.10 per one&#13;&#10;2.SET DOSA price-RS.30&#13;&#10;3.VADA price -RS.10 per one&#13;&#10;4.UPMA price-RS.30&#13;&#10;select the food item from&#13;&#10;1 TO 4&quot;" newline="True"/>
+                <input variable="choice"/>
+                <if expression="choice==1">
+                    <then>
+                        <output expression="&quot;You have choosen IDLY&#13;&#10;Please enter the quantity&quot;" newline="True"/>
+                        <input variable="quantity"/>
+                        <assign variable="a1" expression="a1+(10*quantity)"/>
+                        <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                        <input variable="str"/>
+                        <assign variable="q1" expression="q1+quantity"/>
+                    </then>
+                    <else>
+                        <if expression="choice==2">
+                            <then>
+                                <output expression="&quot;You have choosen SET DOSA&#13;&#10;Please enter the quantity&quot;" newline="True"/>
+                                <input variable="quantity"/>
+                                <assign variable="a2" expression="a2+(30*quantity)"/>
+                                <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                <input variable="str"/>
+                                <assign variable="q2" expression="q2+quantity"/>
+                            </then>
+                            <else>
+                                <if expression="choice==3">
+                                    <then>
+                                        <output expression="&quot;You have choosen VADA&#13;&#10;Please enter the quantity&quot;" newline="True"/>
+                                        <input variable="quantity"/>
+                                        <assign variable="a3" expression="a3+(10*quantity)"/>
+                                        <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                        <input variable="str"/>
+                                        <assign variable="q3" expression="q3+quantity"/>
+                                    </then>
+                                    <else>
+                                        <if expression="choice==4">
+                                            <then>
+                                                <output expression="&quot;You have choosen UPMA&#13;&#10;Please enter the quantity&quot;" newline="True"/>
+                                                <input variable="quantity"/>
+                                                <assign variable="a4" expression="a4+(30*quantity)"/>
+                                                <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                                <input variable="str"/>
+                                                <assign variable="q4" expression="q4+quantity"/>
+                                            </then>
+                                            <else>
+                                                <output expression="&quot;Please enter valid input&quot;" newline="True"/>
+                                                <assign variable="str" expression="&quot;yes&quot;"/>
+                                            </else>
+                                        </if>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </do>
+            <output expression="&quot;you have ordered &quot; &amp;q1 &amp;&quot; IDLY &quot; &amp;q2 &amp;&quot; SET DOSA &quot; &amp;q3 &amp;&quot; VADA &quot; &amp;q4 &amp;&quot; UPMA &quot;" newline="True"/>
+            <assign variable="bill" expression="a1+a2+a3+a4"/>
+        </body>
+    </function>
+    <function name="DataStoring" type="None" variable="">
+        <parameters>
+            <parameter name="CheckinDate" type="String" array="False"/>
+            <parameter name="CheckinDateArray" type="String" array="True"/>
+            <parameter name="CheckoutDate" type="String" array="False"/>
+            <parameter name="CheckoutDateArray" type="String" array="True"/>
+            <parameter name="Name" type="String" array="False"/>
+            <parameter name="NameArray" type="String" array="True"/>
+            <parameter name="PhoneNumber" type="String" array="False"/>
+            <parameter name="PhoneNumberArray" type="String" array="True"/>
+            <parameter name="Address" type="String" array="False"/>
+            <parameter name="AddressArray" type="String" array="True"/>
+            <parameter name="Email" type="String" array="False"/>
+            <parameter name="EmailArray" type="String" array="True"/>
+            <parameter name="RoomType" type="String" array="False"/>
+            <parameter name="RoomTypeArray" type="String" array="True"/>
+            <parameter name="TotalBill" type="Integer" array="False"/>
+            <parameter name="TotalBillArray" type="Integer" array="True"/>
+            <parameter name="PaymentType" type="String" array="False"/>
+            <parameter name="PaymentTypeArray" type="String" array="True"/>
+            <parameter name="RoomNumber" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <assign variable="CheckinDateArray[RoomNumber]" expression="CheckinDate"/>
+            <assign variable="CheckoutDateArray[RoomNumber]" expression="CheckoutDate"/>
+            <assign variable="NameArray[RoomNumber]" expression="Name"/>
+            <assign variable="PhoneNumberArray[RoomNumber]" expression="PhoneNumber"/>
+            <assign variable="AddressArray[RoomNumber]" expression="Address"/>
+            <assign variable="EmailArray[RoomNumber]" expression="Email"/>
+            <assign variable="RoomTypeArray[RoomNumber]" expression="RoomType"/>
+            <assign variable="TotalBillArray[RoomNumber]" expression="TotalBill"/>
+            <assign variable="PaymentTypeArray[RoomNumber]" expression="PaymentType"/>
+        </body>
+    </function>
+    <function name="DateCalculation" type="Integer" variable="NoOfDays">
+        <parameters>
+            <parameter name="DateArray" type="String" array="True"/>
+        </parameters>
+        <body>
+            <declare name="Checkindate, Checkoutdate" type="String" array="False" size=""/>
+            <declare name="NoOfDays" type="Integer" array="False" size=""/>
+            <output expression="&quot; Please enter number of nights you are going to stay in our hotel &quot;" newline="True"/>
+            <input variable="NoOfDays"/>
+            <output expression="&quot; Please enter the checkindate in the format of DD-MM-YYYY &quot;" newline="True"/>
+            <input variable="Checkindate"/>
+            <output expression="&quot; Please ennter your Checkoutdate in the format of DD-MM-YYYY &quot;" newline="True"/>
+            <input variable="Checkoutdate"/>
+            <assign variable="DateArray[0]" expression="Checkindate"/>
+            <assign variable="DateArray[1]" expression="Checkoutdate"/>
+        </body>
+    </function>
+    <function name="Dinner" type="Integer" variable="bill">
+        <parameters>
+            <parameter name="a1" type="Integer" array="False"/>
+            <parameter name="a2" type="Integer" array="False"/>
+            <parameter name="a3" type="Integer" array="False"/>
+            <parameter name="a4" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="choice, quantity, bill" type="Integer" array="False" size=""/>
+            <declare name="q1, q2, q3, q4" type="Integer" array="False" size=""/>
+            <assign variable="q1" expression="0"/>
+            <assign variable="q2" expression="0"/>
+            <assign variable="q3" expression="0"/>
+            <assign variable="q4" expression="0"/>
+            <declare name="str" type="String" array="False" size=""/>
+            <do expression="str==&quot;yes&quot;">
+                <output expression="&quot;You have choosen menu for DINNER&#13;&#10;please choose your food item from the following&#13;&#10;1.ROTI price RS.5 per one&#13;&#10;2.PANNER BUTTER MASALA price-RS.100&#13;&#10;3.CHICKEN RICE-RS.150 per one&#13;&#10;4.THALI  -RS.200 per one&#13;&#10;select the food item from&#13;&#10;1 TO 4&quot;" newline="True"/>
+                <input variable="choice"/>
+                <if expression="choice==1">
+                    <then>
+                        <output expression="&quot;you have choosen ROTI&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                        <input variable="quantity"/>
+                        <assign variable="a1" expression="a1+(5*quantity)"/>
+                        <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                        <input variable="str"/>
+                        <assign variable="q1" expression="q1+quantity"/>
+                    </then>
+                    <else>
+                        <if expression="choice==2">
+                            <then>
+                                <output expression="&quot;you have choosen PANNER BUTTER MASALA&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                                <input variable="quantity"/>
+                                <assign variable="a2" expression="a2+(100*quantity)"/>
+                                <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                <input variable="str"/>
+                                <assign variable="q2" expression="q2+quantity"/>
+                            </then>
+                            <else>
+                                <if expression="choice==3">
+                                    <then>
+                                        <output expression="&quot;you have choosen CHICKEN RICE&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                                        <input variable="quantity"/>
+                                        <assign variable="a3" expression="a3+(150*quantity)"/>
+                                        <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                        <input variable="str"/>
+                                        <assign variable="q3" expression="q3+quantity"/>
+                                    </then>
+                                    <else>
+                                        <if expression="choice==4">
+                                            <then>
+                                                <output expression="&quot;YOU HAVE CHOOSEN THALI&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                                                <input variable="quantity"/>
+                                                <assign variable="a4" expression="a4+(200*quantity)"/>
+                                                <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                                <input variable="str"/>
+                                                <assign variable="q4" expression="q4+quantity"/>
+                                            </then>
+                                            <else>
+                                                <output expression="&quot;please enter valid input&quot;" newline="True"/>
+                                                <assign variable="str" expression="&quot;yes&quot;"/>
+                                            </else>
+                                        </if>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </do>
+            <output expression="&quot;you have ordered &quot; &amp;q1 &amp;&quot; ROTI &quot; &amp;q2 &amp;&quot; PANNER BUTTER MASALA &quot; &amp;q3 &amp;&quot; CHICKEN RICE &quot; &amp;q4 &amp;&quot; THALI &quot;" newline="True"/>
+            <assign variable="bill" expression="a1+a2+a3+a4"/>
+        </body>
+    </function>
+    <function name="Display" type="None" variable="">
+        <parameters>
+            <parameter name="CheckinDateArray" type="String" array="True"/>
+            <parameter name="CheckoutDateArray" type="String" array="True"/>
+            <parameter name="NameArray" type="String" array="True"/>
+            <parameter name="PhoneNumberArray" type="String" array="True"/>
+            <parameter name="AddressArray" type="String" array="True"/>
+            <parameter name="EmailArray" type="String" array="True"/>
+            <parameter name="RoomTypeArray" type="String" array="True"/>
+            <parameter name="TotalBillArray" type="Integer" array="True"/>
+            <parameter name="PaymentTypeArray" type="String" array="True"/>
+        </parameters>
+        <body>
+            <declare name="RoomNumber" type="Integer" array="False" size=""/>
+            <output expression="&quot;Enter The Room Number To Their Your Booking Details&quot;" newline="True"/>
+            <input variable="RoomNumber"/>
+            <output expression="&quot;CheckinDate: &quot; &amp; CheckinDateArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; CheckoutDate: &quot; &amp; CheckoutDateArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; Name: &quot; &amp; NameArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; PhoneNumber: &quot; &amp; PhoneNumberArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; Address: &quot; &amp; AddressArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; RoomType: &quot; &amp; RoomTypeArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; TotalBill: &quot; &amp; TotalBillArray[RoomNumber-1]&amp;&quot;&#13;&#10;&#13;&#10; PaymentType: &quot; &amp; PaymentTypeArray[RoomNumber-1]" newline="True"/>
+        </body>
+    </function>
+    <function name="EfficiencyRooms" type="Integer" variable="BillEffi">
+        <parameters/>
+        <body>
+            <declare name="BillEffi, n" type="Integer" array="False" size=""/>
+            <declare name="b1" type="Integer" array="False" size=""/>
+            <assign variable="b1" expression="0"/>
+            <output expression="&quot; The cost of Efficiency rooms is - only 5999 per day &quot;" newline="True"/>
+            <output expression="&quot; Please enter how many Efficiency rooms you want to book &quot;" newline="True"/>
+            <input variable="n"/>
+            <assign variable="b1" expression="b1+(5999*n)"/>
+            <assign variable="BillEffi" expression="b1"/>
+            <output expression="&quot; Bill amount for Efficiency rooms is = &quot;&amp;BillEffi&amp;&quot; only &quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="InterconnectedRooms" type="Integer" variable="BillInter">
+        <parameters/>
+        <body>
+            <declare name="BillInter, n, b1" type="Integer" array="False" size=""/>
+            <assign variable="b1" expression="0"/>
+            <output expression="&quot; cost of Interconnected room per day is - only 2999 rupees &quot;" newline="True"/>
+            <output expression="&quot;Please enter number of Interconnected rooms you want &quot;" newline="True"/>
+            <input variable="n"/>
+            <assign variable="b1" expression="b1+(2999*n)"/>
+            <assign variable="BillInter" expression="b1"/>
+            <output expression="&quot; Bill amount for Interconnected rooms is =&quot;&amp;BillInter&amp;&quot; only &quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="Lunch" type="Integer" variable="bill">
+        <parameters>
+            <parameter name="a1" type="Integer" array="False"/>
+            <parameter name="a2" type="Integer" array="False"/>
+            <parameter name="a3" type="Integer" array="False"/>
+            <parameter name="a4" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="choice, quantity, bill" type="Integer" array="False" size=""/>
+            <declare name="q1, q2, q3, q4" type="Integer" array="False" size=""/>
+            <assign variable="q1" expression="0"/>
+            <assign variable="q2" expression="0"/>
+            <assign variable="q3" expression="0"/>
+            <assign variable="q4" expression="0"/>
+            <declare name="str" type="String" array="False" size=""/>
+            <do expression="str==&quot;yes&quot;">
+                <output expression="&quot;You have choosen menu for LUNCH&#13;&#10;Please choose your food item from the following&#13;&#10;1.CHICKEN BIRIYANI price-RS.200 per one&#13;&#10;2.VEG BIRIYANI price-RS.100&#13;&#10;3.PLATE MEALS -RS.80 per one&#13;&#10;4.MANDI -RS.350 per one&#13;&#10;select the food item from&#13;&#10;1 TO 4&quot;" newline="True"/>
+                <input variable="choice"/>
+                <if expression="choice==1">
+                    <then>
+                        <output expression="&quot;You have choosen CHICKEN BIRIYANI&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                        <input variable="quantity"/>
+                        <assign variable="a1" expression="a1+(200*quantity)"/>
+                        <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                        <input variable="str"/>
+                        <assign variable="q1" expression="q1+quantity"/>
+                    </then>
+                    <else>
+                        <if expression="choice==2">
+                            <then>
+                                <output expression="&quot;You have choosen VEG BIRIYANI&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                                <input variable="quantity"/>
+                                <assign variable="a2" expression="a2+(100*quantity)"/>
+                                <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                <input variable="str"/>
+                                <assign variable="q2" expression="q2+quantity"/>
+                            </then>
+                            <else>
+                                <if expression="choice==3">
+                                    <then>
+                                        <output expression="&quot;You have choosen PLATE MEALS&#13;&#10;please enter the quantity&quot;" newline="True"/>
+                                        <input variable="quantity"/>
+                                        <assign variable="a3" expression="a3+(80*quantity)"/>
+                                        <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                        <input variable="str"/>
+                                        <assign variable="q3" expression="q3+quantity"/>
+                                    </then>
+                                    <else>
+                                        <if expression="choice==4">
+                                            <then>
+                                                <output expression="&quot;You have choosen Mandi&#13;&#10;Please enter the quantity&quot;" newline="True"/>
+                                                <input variable="quantity"/>
+                                                <assign variable="a4" expression="a4+(350*quantity)"/>
+                                                <output expression="&quot;Do you want to select another item &#13;&#10;Type yes otherwise no&quot;" newline="True"/>
+                                                <input variable="str"/>
+                                                <assign variable="q4" expression="q4+quantity"/>
+                                            </then>
+                                            <else>
+                                                <output expression="&quot;Please enter valid input&quot;" newline="True"/>
+                                                <assign variable="str" expression="&quot;yes&quot;"/>
+                                            </else>
+                                        </if>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </do>
+            <output expression="&quot;You have ordered &quot; &amp;q1 &amp;&quot; CHICKEN BIRIYANI &quot; &amp;q2 &amp;&quot; VEG BIRIYANI &quot; &amp;q3 &amp;&quot; PLATE MEALS &quot; &amp;q4 &amp;&quot; MANDI &quot;" newline="True"/>
+            <assign variable="bill" expression="a1+a2+a3+a4"/>
+        </body>
+    </function>
+    <function name="NormalRooms" type="Integer" variable="FNR">
+        <parameters/>
+        <body>
+            <declare name="BillNormal, Choice, FNR" type="Integer" array="False" size=""/>
+            <declare name="n" type="Integer" array="False" size=""/>
+            <declare name="b1, b2, b3, b4" type="Integer" array="False" size=""/>
+            <assign variable="b1" expression="0"/>
+            <assign variable="b2" expression="0"/>
+            <assign variable="b3" expression="0"/>
+            <assign variable="b4" expression="0"/>
+            <declare name="str" type="String" array="False" size=""/>
+            <output expression="&quot; Enter the type of room you want &#13;&#10; 1. Single room - only 999 ruppes per day&#13;&#10; 2. Double room - only 1999 ruppes per day&#13;&#10; 3. Triple room - only 2599 ruppes per day&#13;&#10; 4. Quad room - only 2999 ruppes per day&quot;&#13;&#10;&amp;&quot;Enter any one of the choice from one to four&quot;" newline="True"/>
+            <input variable="choice"/>
+            <if expression="Choice == 1">
+                <then>
+                    <output expression="&quot; You have choosen Single room &quot;" newline="True"/>
+                    <output expression="&quot; Please enter number of rooms you want to book &quot;" newline="True"/>
+                    <input variable="n"/>
+                    <assign variable="b1" expression="b1+(999*n)"/>
+                </then>
+                <else>
+                    <if expression="Choice == 2">
+                        <then>
+                            <output expression="&quot; You have choosen Double room &quot;" newline="True"/>
+                            <output expression="&quot; Please enter number of rooms you want to book &quot;" newline="True"/>
+                            <input variable="n"/>
+                            <assign variable="b2" expression="b2+(1999*n)"/>
+                        </then>
+                        <else>
+                            <if expression="Choice == 3">
+                                <then>
+                                    <output expression="&quot; You have choosen Triple room &quot;" newline="True"/>
+                                    <output expression="&quot; Please enter number of rooms you want to book &quot;" newline="True"/>
+                                    <input variable="n"/>
+                                    <assign variable="b3" expression="b3+(2599*n)"/>
+                                </then>
+                                <else>
+                                    <if expression="choice == 4">
+                                        <then>
+                                            <output expression="&quot; You have choosen Quad room &quot;" newline="True"/>
+                                            <output expression="&quot; Please enter number of rooms you want to book &quot;" newline="True"/>
+                                            <input variable="n"/>
+                                            <assign variable="b4" expression="b4+(2999*n)"/>
+                                        </then>
+                                        <else>
+                                            <output expression="&quot; Please enter correct choice number from 1 to 4 &quot;" newline="True"/>
+                                            <assign variable="str" expression="&quot;yes&quot;"/>
+                                        </else>
+                                    </if>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+            <assign variable="FNR" expression="b1+b2+b3+b4"/>
+            <output expression="&quot;Bill amount for Normal rooms is =&quot;&amp; FNR &amp;&quot; 0nly &quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="Payment" type="Integer" variable="TotalBill">
+        <parameters>
+            <parameter name="roombill" type="Integer" array="False"/>
+            <parameter name="restaurantbill" type="Integer" array="False"/>
+            <parameter name="PaymentArray" type="String" array="True"/>
+            <parameter name="NoOfdays" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="PaymentMethod" type="Integer" array="False" size=""/>
+            <declare name="Totalbill" type="Integer" array="False" size=""/>
+            <assign variable="Totalbill" expression="(roombill*NoOfDays)+(restaurantbill*NoOfDays)"/>
+            <output expression="&quot;The total room bill is :&quot;  &amp;roombill" newline="True"/>
+            <output expression="&quot;The total restuarent bill is :&quot; &amp;restaurantbill" newline="True"/>
+            <output expression="&quot;The total bill is :&quot; &amp;Totalbill" newline="True"/>
+            <assign variable="PaymentMethod" expression="0"/>
+            <while expression="(PaymentMethod!=1) &amp;&amp; (PaymentMethod!=2) &amp;&amp; (PaymentMethod!=3)">
+                <output expression="&quot;Please select the payment method&#13;&#10;1.Cash&#13;&#10;2.Debit card&#13;&#10;3.Credit card&#13;&#10;Enter 1 or 2 or 3&quot;" newline="True"/>
+                <input variable="PaymentMethod"/>
+                <if expression="PaymentMethod==1">
+                    <then>
+                        <assign variable="PaymentArray[0]" expression="&quot;Cash&quot;"/>
+                    </then>
+                    <else>
+                        <if expression="PaymentMethod==2">
+                            <then>
+                                <assign variable="PaymentArray[0]" expression="&quot;Debit Card&quot;"/>
+                            </then>
+                            <else>
+                                <if expression="PaymentMethod==3">
+                                    <then>
+                                        <assign variable="PaymentArray[0]" expression="&quot;Credit Card&quot;"/>
+                                    </then>
+                                    <else>
+                                        <output expression="&quot;INVALID INPUT&quot;" newline="True"/>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </while>
+            <output expression="&quot;Payment Successfull&quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="PresidentialsuiteRooms" type="Integer" variable="BillSuit">
+        <parameters/>
+        <body>
+            <declare name="BillSuit, n, b1" type="Integer" array="False" size=""/>
+            <assign variable="b1" expression="0"/>
+            <output expression="&quot; Each Presindential suit room costs is - only 49999 rupees per day &quot;" newline="True"/>
+            <output expression="&quot; Please enter the number of Presidential suit rooms you want to book &quot;" newline="True"/>
+            <input variable="n"/>
+            <assign variable="b1" expression="b1+(49999*n)"/>
+            <assign variable="BillSuit" expression="b1"/>
+            <output expression="&quot; Bill amount for Suit rooms is = &quot;&amp;BillSuit&amp;&quot; only &quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="Restaurant" type="Integer" variable="RestaurantBill">
+        <parameters/>
+        <body>
+            <output expression="&quot;Enter the food you want until your stay in Atulyaa Taj Hotel&quot;" newline="True"/>
+            <declare name="bill, quantity, LunchTotal, DinnerTotal, BreakfastTotal" type="Integer" array="False" size=""/>
+            <declare name="choice" type="String" array="False" size=""/>
+            <declare name="RestaurantBill" type="Integer" array="False" size=""/>
+            <declare name="str" type="String" array="False" size=""/>
+            <declare name="a1, a2, a3, a4" type="Integer" array="False" size=""/>
+            <assign variable="DinnerTotal" expression="0"/>
+            <assign variable="LunchTotal" expression="0"/>
+            <assign variable="BreakfastTotal" expression="0"/>
+            <assign variable="a1" expression="0"/>
+            <assign variable="a2" expression="0"/>
+            <assign variable="a3" expression="0"/>
+            <assign variable="a4" expression="0"/>
+            <output expression="&quot;Do You need Breakfast&#13;&#10;Give yes Otherwise no&quot;" newline="True"/>
+            <input variable="choice"/>
+            <if expression="(choice==&quot;yes&quot;) || (choice==&quot;YES&quot;) || (choice==&quot;Yes&quot;)">
+                <then>
+                    <assign variable="BreakfastTotal" expression="Breakfast(a1,a2,a3,a4)"/>
+                </then>
+                <else/>
+            </if>
+            <output expression="&quot;Do You need Lunch&#13;&#10;Give yes Otherwise no&quot;" newline="True"/>
+            <input variable="choice"/>
+            <if expression="(choice==&quot;yes&quot;) || (choice==&quot;YES&quot;) || (choice==&quot;Yes&quot;)">
+                <then>
+                    <assign variable="LunchTotal" expression="Lunch(a1,a2,a3,a4)"/>
+                </then>
+                <else/>
+            </if>
+            <output expression="&quot;Do You need Dinner&#13;&#10;Give yes Otherwise no&quot;" newline="True"/>
+            <input variable="choice"/>
+            <if expression="(choice==&quot;yes&quot;) || (choice==&quot;YES&quot;) || (choice==&quot;Yes&quot;)">
+                <then>
+                    <assign variable="DinnerTotal" expression="Dinner(a1,a2,a3,a4)"/>
+                </then>
+                <else/>
+            </if>
+            <assign variable="RestaurantBill" expression="DinnerTotal+BreakfastTotal+LunchTotal"/>
+        </body>
+    </function>
+    <function name="RoomInformation" type="Integer" variable="RoomBill">
+        <parameters>
+            <parameter name="RoomInfoArray" type="String" array="True"/>
+        </parameters>
+        <body>
+            <declare name="choice" type="Integer" array="False" size=""/>
+            <declare name="RoomBill" type="Integer" array="False" size=""/>
+            <declare name="BillNorm, BillInter, BillSuit, BillEffi" type="Integer" array="False" size=""/>
+            <do expression="choice &gt; 4">
+                <output expression="&quot; Choose the type of room you want &#13;&#10;1. Normal rooms&#13;&#10;2. Interconnected rooms&#13;&#10;3. Presidental suite rooms&#13;&#10;4. Efficiency rooms&quot;&#13;&#10;&amp;&quot;Enter any of the choice from 1 to 4&amp;&quot;" newline="True"/>
+                <output expression="&quot; &#13;&#10;The Interconnected room contain two seperate rooms and one room contain king bed and the other room contain queen bed &quot;" newline="True"/>
+                <output expression="&quot; &#13;&#10;Presindential suit rooms contains SPA,clothes are provided &quot;" newline="True"/>
+                <output expression="&quot; &#13;&#10;Efficiency rooms contains a bed(2 people can sleep), kitchen, one dinning table &quot;" newline="True"/>
+                <input variable="choice"/>
+                <if expression="choice &gt;= 5">
+                    <then>
+                        <output expression="&quot; Please enter correct choice number from 1 to 4 &quot;" newline="True"/>
+                    </then>
+                    <else>
+                        <output expression="&quot;You have entered choice number&quot;&amp;choice" newline="True"/>
+                    </else>
+                </if>
+            </do>
+            <if expression="choice == 1">
+                <then>
+                    <output expression="&quot; Thank you&#13;&#10;You have choosen Normal rooms in our hotel &quot;" newline="True"/>
+                    <assign variable="RoomInfoArray[0]" expression="&quot;Normal Room&quot;"/>
+                    <assign variable="RoomBill" expression="NormalRooms()"/>
+                </then>
+                <else>
+                    <if expression="choice == 2">
+                        <then>
+                            <output expression="&quot; Thank you&#13;&#10;You have choosen Interconnected rooms in our hotel &quot;" newline="True"/>
+                            <assign variable="RoomInfoArray[0]" expression="&quot;Interconnected Room&quot;"/>
+                            <assign variable="RoomBill" expression="InterconnectedRooms()"/>
+                        </then>
+                        <else>
+                            <if expression="choice == 3">
+                                <then>
+                                    <output expression="&quot; Thank you&#13;&#10;You have choosen Presidential suit rooms in our hotel &quot;" newline="True"/>
+                                    <assign variable="RoomInfoArray[0]" expression="&quot;Presidential Suit&quot;"/>
+                                    <assign variable="RoomBill" expression="PresidentialSuiteRooms()"/>
+                                </then>
+                                <else>
+                                    <if expression="choice == 4">
+                                        <then>
+                                            <output expression="&quot; Thank you&#13;&#10;You have choosen Efficiency rooms in our hotel &quot;" newline="True"/>
+                                            <assign variable="RoomInfoArray[0]" expression="&quot;Efficiency Room&quot;"/>
+                                            <assign variable="RoomBill" expression="EfficiencyRooms()"/>
+                                        </then>
+                                        <else/>
+                                    </if>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
